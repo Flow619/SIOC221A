@@ -30,10 +30,11 @@ Temperature = DATA.data.values;
 figure
 TIME_UTC = datetime(DATA.data.tstamp,'ConvertFrom','datenum','TimeZone','UTC')
 
-plot(TIME_UTC,Temperature,'LineWidth',1.5)
+plot(TIME_UTC,Temperature,'LineWidth',2.5)
 xlabel('Time [UTC]')
 ylabel('Temperature [Deg C]')
 set(gca,'fontsize',20)
+grid on
 
 
 %%  Plot in Local Time (Not for HW)
@@ -53,4 +54,4 @@ disp(['Stand. Dev Temperature = ',num2str(Std_Temperature)])
 
 %% Create Probability Distribution Function (1d)
 
-Histogram_Function(Temperature,'Temperature [deg C]',10,1,"NEWFIG")
+Histogram_Function(Temperature,'Temperature [deg C]',40,1,"NEWFIG")

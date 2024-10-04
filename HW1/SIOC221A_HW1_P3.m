@@ -24,19 +24,21 @@ temperature_degF = (temperature .* (9/5)) + 32;
 %% Plot Time Series (3a)
 figure
 subplot(2,1,1)
-plot(Time,temperature)
+plot(Time,temperature,'LineWidth',1)
 
 xlabel('Time')
 ylabel('Temperature [deg C]')
-
+set(gca,'FontSize',18)
 
 subplot(2,1,2)
-plot(Time,temperature_degF)
+plot(Time,temperature_degF,'LineWidth',1)
 
 xlabel('Time')
 ylabel('Temperature [deg F]')
+set(gca,'FontSize',18)
+
 %%  Plot Probability Distribution (3b)
-Histogram_Function(temperature,'Temperature [Deg C]',101,1,"NEWFIG")
+Histogram_Function(temperature,'Temperature [Deg C]',100,1,"NEWFIG")
 Histogram_Function(temperature_degF,'Temperature [Deg F]',100,1,"NEWFIG")
 
 %% Return Interval: Day Above 40 degC (3c)

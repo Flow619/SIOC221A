@@ -23,11 +23,11 @@ histogram('BinEdges',Bins,'BinCounts',probability,'EdgeColor',[0 0 0],'FaceAlpha
 
 end
 
-ylabel('Empirical Proability Distribution Function')
+ylabel('Probability')
 xlabel(XLABEL_String)
 
 set(gca,'FontSize',20)
 
-title([num2str(nBins), ' bins'])
+title(['Empirical Probability Distribution Function: ', num2str(nBins), ' bins'])
 
 end

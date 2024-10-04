@@ -29,19 +29,21 @@ Time = datetime(Time,'ConvertFrom','epochtime');
 figure
 subplot(2,1,1)
 plot(Time, SST)
-xlabel('Time [UTC]')
+xlabel('Time [Pacific Time Zone]')
 ylabel('SST [deg C]')
 set(gca,'fontsize',18)
+grid on
 
 subplot(2,1,2)
 plot(Time, SST_Fahrenheit)
-xlabel('Time [UTC]')
+xlabel('Time [Pacific Time Zone]')
 ylabel('SST [deg F]')
 set(gca,'fontsize',18)
+grid on
 
 
 
 %% Probability Distribution Function - Fahrenheit (2e)
-Histogram_Function(SST_Fahrenheit,'SST [deg F]',20,1,"NEWFIG")
+Histogram_Function(SST_Fahrenheit,'SST [deg F]',40,1,"NEWFIG")
 %% Probability Distribution Function - Celsius (2e)
-Histogram_Function(SST,'SST [deg C]',20,1,"NEWFIG")
+Histogram_Function(SST,'SST [deg C]',40,1,"NEWFIG")
