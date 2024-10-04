@@ -1,11 +1,14 @@
 %% SIOC 221A
 %% Homework #1
 
+% Author: Trenton Saunders
+% Date: 10-02-2024
+
 %%
 close all
 clear all
 clc
-%%
+%% RBR Toolbox Path
 
 addpath('C:\Users\Trenton\Documents\MATLAB\Packages\rbr-rsktools-7a76410a599a\rbr-rsktools-7a76410a599a\')
 
@@ -19,43 +22,35 @@ ClassData = RSKopen(file);
 DATA = RSKreaddata(ClassData)
 
 
-%%
+%%  Pull Temperature Data
 Temperature = DATA.data.values;
 
 
-%%
+%% Plot (1.b)
 figure
 TIME_UTC = datetime(DATA.data.tstamp,'ConvertFrom','datenum','TimeZone','UTC')
 
-plot(TIME_UTC,Temperature)
-xlabel('TIME - UTC')
+plot(TIME_UTC,Temperature,'LineWidth',1.5)
+xlabel('Time [UTC]')
 ylabel('Temperature [Deg C]')
+set(gca,'fontsize',20)
 
 
+%%  Plot in Local Time (Not for HW)
+% TIME_Local = TIME_UTC
+% TIME_Local.TimeZone = 'America/Los_Angeles'
+% 
+% figure
+% plot(TIME_Local,Temperature)
 
-%%
-TIME_Local = TIME_UTC
-TIME_Local.TimeZone = 'America/Los_Angeles'
-
-figure
-plot(TIME_Local,Temperature)
-
-%%
+%% Calculate Mean and Std. Dev (1c)
 Mean_Temperature = mean(Temperature)
 Std_Temperature= std(Temperature)
 
-%%
-Bins = linspace(min(Temperature),max(Temperature),11)
-
-Temp_Binned = discretize(Temperature,Bins)
-
-counts = [sum(Temp_Binned == 1),sum(Temp_Binned == 2),sum(Temp_Binned == 3),sum(Temp_Binned == 4),sum(Temp_Binned == 5)...
-    sum(Temp_Binned == 6),sum(Temp_Binned == 7),sum(Temp_Binned == 8),sum(Temp_Binned == 9),sum(Temp_Binned == 10)]
-
-probability = counts./sum(counts);
+disp(['Mean Temperature = ',num2str(Mean_Temperature)])
+disp(['Stand. Dev Temperature = ',num2str(Std_Temperature)])
 
 
-figure
-histogram('BinEdges',Bins,'BinCounts',probability)
-ylabel('Empirical Proability Distribution Function')
-xlabel('Temperature [deg C]')
+%% Create Probability Distribution Function (1d)
+
+Histogram_Function(Temperature,'Temperature [deg C]',10,1,"NEWFIG")

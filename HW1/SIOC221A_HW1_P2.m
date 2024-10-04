@@ -1,58 +1,47 @@
 %% SIOC221A_HW1_P2
 
+% Author: Trenton Saunders
+% Date: 10-02-2024
+
 
 %%
 close all
 clear all
 clc
 
-%%
+%%  NCTOOLBOX
 addpath('C:\Users\Trenton\Documents\MATLAB\Packages\nctoolbox-master\nctoolbox-master')
 
-%%
-NetCDF_info = ncinfo('scripps-pier-automated-shore-sta-1_72eb_9b4d_09fa.nc')
+%% Inspect netCDF file
+NetCDF_info = ncinfo('scripps-pier-automated-shore-sta-1_72eb_9b4d_09fa.nc');
 
-%%
+%%  Pull Relevant Data from netCDF file
 SST = ncread("scripps-pier-automated-shore-sta-1_72eb_9b4d_09fa.nc",'sea_water_temperature');
 Time = ncread("scripps-pier-automated-shore-sta-1_72eb_9b4d_09fa.nc",'time');
 
+%% Convert to Fahrenheit
 SST_Fahrenheit = (SST .* (9/5)) + 32;
 
-
 %% Convert Time
-Time = datetime(Time,'ConvertFrom','epochtime')
-%% Plot Time Series
+Time = datetime(Time,'ConvertFrom','epochtime');
+
+%% Plot Time Series (2d)
 figure
 subplot(2,1,1)
 plot(Time, SST)
-
+xlabel('Time [UTC]')
+ylabel('SST [deg C]')
+set(gca,'fontsize',18)
 
 subplot(2,1,2)
 plot(Time, SST_Fahrenheit)
+xlabel('Time [UTC]')
+ylabel('SST [deg F]')
+set(gca,'fontsize',18)
 
 
-%% Probability Distribution Function - Fahrenheit
-Bins = linspace(min(SST_Fahrenheit),max(SST_Fahrenheit),11)
 
-Temp_Binned = discretize(SST_Fahrenheit,Bins)
-
-counts = [sum(Temp_Binned == 1),sum(Temp_Binned == 2),sum(Temp_Binned == 3),sum(Temp_Binned == 4),sum(Temp_Binned == 5)...
-    sum(Temp_Binned == 6),sum(Temp_Binned == 7),sum(Temp_Binned == 8),sum(Temp_Binned == 9),sum(Temp_Binned == 10)]
-
-probability = counts./sum(counts);
-
-%% Probability Distribution Function - Celsius
-Bins = linspace(min(SST),max(SST),11)
-
-Temp_Binned = discretize(SST,Bins)
-
-counts = [sum(Temp_Binned == 1),sum(Temp_Binned == 2),sum(Temp_Binned == 3),sum(Temp_Binned == 4),sum(Temp_Binned == 5)...
-    sum(Temp_Binned == 6),sum(Temp_Binned == 7),sum(Temp_Binned == 8),sum(Temp_Binned == 9),sum(Temp_Binned == 10)]
-
-probability = counts./sum(counts);
-
-
-figure
-histogram('BinEdges',Bins,'BinCounts',probability)
-ylabel('Empirical Proability Distribution Function')
-xlabel('Temperature [deg C]')
+%% Probability Distribution Function - Fahrenheit (2e)
+Histogram_Function(SST_Fahrenheit,'SST [deg F]',20,1,"NEWFIG")
+%% Probability Distribution Function - Celsius (2e)
+Histogram_Function(SST,'SST [deg C]',20,1,"NEWFIG")
