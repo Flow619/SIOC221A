@@ -27,52 +27,59 @@ Data.h2023.Datetime = datetime(Data.h2023.Datenum,'ConvertFrom','datenum')
 
 figure
 subplot(4,1,1)
-plot([Data.h2022.Datetime;Data.h2023.Datetime],[Data.h2022.WSPD;Data.h2023.WSPD])
-ylabel('Wind Speed []')
+plot([Data.h2022.Datetime;Data.h2023.Datetime],[Data.h2022.WSPD;Data.h2023.WSPD],'.','MarkerSize',10)
+ylabel('Wind Speed [m/s]','FontSize',12,'FontWeight','bold')
 
 subplot(4,1,2)
-plot([Data.h2022.Datetime;Data.h2023.Datetime],[Data.h2022.WVHT;Data.h2023.WVHT])
-ylabel('Wave Height []')
+plot([Data.h2022.Datetime;Data.h2023.Datetime],[Data.h2022.WVHT;Data.h2023.WVHT],'.','MarkerSize',10)
+ylabel('Wave Height [m]','FontSize',12,'FontWeight','bold')
 
 subplot(4,1,3)
-plot([Data.h2022.Datetime;Data.h2023.Datetime],[Data.h2022.WTMP;Data.h2023.WTMP])
-ylabel('Water Temp [deg C]')
+plot([Data.h2022.Datetime;Data.h2023.Datetime],[Data.h2022.WTMP;Data.h2023.WTMP],'.','MarkerSize',10)
+ylabel('Water Temp [deg C]','FontSize',12,'FontWeight','bold')
 
 subplot(4,1,4)
-plot([Data.h2022.Datetime;Data.h2023.Datetime],[Data.h2022.ATMP;Data.h2023.ATMP])
-ylabel('Air Temp [deg C]')
+plot([Data.h2022.Datetime;Data.h2023.Datetime],[Data.h2022.ATMP;Data.h2023.ATMP],'.','MarkerSize',10)
+ylabel('Air Temp [deg C]','FontSize',12,'FontWeight','bold')
+
+sgtitle('NDBC Buoy 46047','FontSize',20)
 
 %% QC Plot Time Series
 
-figure
+fig = figure
 subplot(4,1,1)
+hold on
 Mask2022 = Data.h2022.WSPD < 90;
 Mask2023 = Data.h2023.WSPD < 90;
 
 plot([Data.h2022.Datetime(Mask2022);Data.h2023.Datetime(Mask2023)],[Data.h2022.WSPD(Mask2022);Data.h2023.WSPD(Mask2023)],'.')
-ylabel('Wind Speed []')
+ylabel('Wind Speed [m/s]','FontSize',12,'FontWeight','bold')
 
 subplot(4,1,2)
+hold on
 Mask2022 = Data.h2022.WVHT < 90;
 Mask2023 = Data.h2023.WVHT < 90;
 
 plot([Data.h2022.Datetime(Mask2022);Data.h2023.Datetime(Mask2023)],[Data.h2022.WVHT(Mask2022);Data.h2023.WVHT(Mask2023)],'.')
-ylabel('Wave Height []')
+ylabel('Wave Height [m]','FontSize',12,'FontWeight','bold')
 
 subplot(4,1,3)
+hold on
 Mask2022 = Data.h2022.WTMP < 900;
 Mask2023 = Data.h2023.WTMP < 900;
 
 plot([Data.h2022.Datetime(Mask2022);Data.h2023.Datetime(Mask2023)],[Data.h2022.WTMP(Mask2022);Data.h2023.WTMP(Mask2023)],'.')
-ylabel('Water Temp [deg C]')
+ylabel('Water Temp [deg C]','FontSize',12,'FontWeight','bold')
 
 subplot(4,1,4)
+hold on
 Mask2022 = Data.h2022.ATMP < 900;
 Mask2023 = Data.h2023.ATMP < 900;
 
 plot([Data.h2022.Datetime(Mask2022);Data.h2023.Datetime(Mask2023)],[Data.h2022.ATMP(Mask2022);Data.h2023.ATMP(Mask2023)],'.')
-ylabel('Air Temp [deg C]')
+ylabel('Air Temp [deg C]','FontSize',12,'FontWeight','bold')
 
+sgtitle('NDBC Buoy 46047','FontSize',20)
 
 %% Average the Data to Provide Monthly Means
 Data.Monthly.WSPD = cell(24,6); % Columns: monthly Datetime values, monthly data, mean, std dev, length, standard error
@@ -84,37 +91,34 @@ Data.Monthly.ATMP = cell(24,6);
 YearMonth = datenum([2022*ones(12,1);2023*ones(12,1)],[[1:12]';[1:12]'],15*ones(24,1));
 YearMonth = datetime(YearMonth,'ConvertFrom','datenum');
 
-%% Write Function to Calculate Average (Write function to do this)
-
-for i = 1:24
-    if i <= 12
-        Data.Monthly.WSPD{i,1} = Data.h2022.Datetime( Data.h2022.MM == i & Data.h2022.WSPD < 90 );
-        Data.Monthly.WSPD{i,2} = Data.h2022.WSPD ( Data.h2022.MM == i & Data.h2022.WSPD < 90 ) ;
-        Data.Monthly.WSPD{i,3} = mean(Data.Monthly.WSPD{i,2});
-        Data.Monthly.WSPD{i,4} = std(Data.Monthly.WSPD{i,2});
-        Data.Monthly.WSPD{i,5} = length(Data.Monthly.WSPD{i,2} );
-        Data.Monthly.WSPD{i,6} = Data.Monthly.WSPD{i,4} / (sqrt( Data.Monthly.WSPD{i,5} / (7*24*6) ));
-
-        % plot( Data.Mean.WSPD{i,1},Data.Mean.WSPD{i,2},'.')
-    else
-        Data.Monthly.WSPD{i,1} = Data.h2023.Datetime( Data.h2023.MM == (i-12) & Data.h2023.WSPD < 90 );
-        Data.Monthly.WSPD{i,2} = Data.h2023.WSPD ( Data.h2023.MM == (i-12) & Data.h2023.WSPD < 90 ) ;
-        Data.Monthly.WSPD{i,3} = mean(Data.Monthly.WSPD{i,2});
-        Data.Monthly.WSPD{i,4} = std(Data.Monthly.WSPD{i,2});
-        Data.Monthly.WSPD{i,5} = length(Data.Monthly.WSPD{i,2} );
-        Data.Monthly.WSPD{i,6} = Data.Monthly.WSPD{i,4} / (sqrt( Data.Monthly.WSPD{i,5} / (7*24*6) ));
-
-        % plot( Data.Mean.WSPD{i,1},Data.Mean.WSPD{i,2},'.')
-    end
-
-end
-
-figure
-errorbar(YearMonth,[Data.Monthly.WSPD{:,3}],[Data.Monthly.WSPD{:,6}])
-
-%% Plot Monthly Mean and Std. dev
+%% Write Function to Calculate Average (Write function to do this) (Question 3)
+[Data.Monthly.WSPD,fig] = Monthly_NDBC_function(Data,Data.Monthly.WSPD,Data.h2022.WSPD,Data.h2023.WSPD,YearMonth,90,fig,1);
+[Data.Monthly.WVHT,fig] = Monthly_NDBC_function(Data,Data.Monthly.WVHT,Data.h2022.WVHT,Data.h2023.WVHT,YearMonth,90,fig,2);
+[Data.Monthly.WTMP,fig] = Monthly_NDBC_function(Data,Data.Monthly.WTMP,Data.h2022.WTMP,Data.h2023.WTMP,YearMonth,900,fig,3);
+[Data.Monthly.ATMP,fig] = Monthly_NDBC_function(Data,Data.Monthly.ATMP,Data.h2022.ATMP,Data.h2023.ATMP,YearMonth,900,fig,4);
 
 
+%% Least-squares fit (Q4) - Write this out as a function! Check with Classmates.
+omega_2022 = (2*pi)/(size(Data.h2022,1));
+omega_2023 = (2*pi)/(size(Data.h2023,1));
 
-figure
-plot(YearMonth,[Data.Monthly.WSPD{:,3}],'.')
+
+time_2022 = 1:size(Data.h2022,1);
+time_2023 = 1:size(Data.h2023,1);
+
+y_2022 = Data.h2022.WSPD;
+y_2023 = Data.h2023.WSPD;
+
+time_2022(y_2022 > 90) = [];
+time_2023(y_2023 > 90) = [];
+
+y_2022(y_2022 > 90) = [];
+y_2023(y_2023 > 90) = [];
+
+
+A_2022 = [ones(1,length(time_2022));sin(omega_2022.*time_2022);cos(omega_2022.*time_2022)]';
+x_2022 = (inv(transpose(A_2022)*A_2022)) * (transpose(A_2022)*y_2022);
+
+A_2023 = [ones(1,length(time_2023));sin(omega_2023.*time_2023);cos(omega_2023.*time_2023)]';
+x_2023 = (inv(transpose(A_2023)*A_2023)) * (transpose(A_2023)*y_2023);
+%% Least-squares fit a semi-annual cycle (Q5)
