@@ -1,4 +1,4 @@
-function [DATA_Struct] = Monthly_NDBC_function(Data,DATA_Struct,TimeSeries_Variable_2022,TimeSeries_Variable_2023,YearMonth,Threshold)
+function [DATA_Struct,fig] = Monthly_NDBC_function(Data,DATA_Struct,TimeSeries_Variable_2022,TimeSeries_Variable_2023,YearMonth,Threshold,fig,Subplot_Number)
 
 
 for i = 1:24
@@ -24,7 +24,8 @@ for i = 1:24
 
 end
 
-figure
-errorbar(YearMonth,[DATA_Struct{:,3}],[DATA_Struct{:,6}])
+figure(fig)
+subplot(4,1,Subplot_Number)
+errorbar(YearMonth,[DATA_Struct{:,3}],[DATA_Struct{:,6}],'r','linewidth',2.5,'CapSize',10)
 
 end
