@@ -23,7 +23,7 @@ Data.h2023.Datenum = datenum(Data.h2023.x_YY,Data.h2023.MM,Data.h2023.DD,Data.h2
 Data.h2022.Datetime = datetime(Data.h2022.Datenum,'ConvertFrom','datenum')
 Data.h2023.Datetime = datetime(Data.h2023.Datenum,'ConvertFrom','datenum')
 
-%% Plot Time Series
+%% Plot Time Series (including bad data)
 
 figure
 subplot(4,1,1)
@@ -106,11 +106,17 @@ omega_2023 = (2*pi)/(size(Data.h2023,1));
 time_2022 = 1:size(Data.h2022,1);
 time_2023 = 1:size(Data.h2023,1);
 
-y_2022 = Data.h2022.WSPD;
-y_2023 = Data.h2023.WSPD;
+y_2022 = Data.h2022.ATMP;
+y_2023 = Data.h2023.ATMP;
 
 time_2022(y_2022 > 90) = [];
 time_2023(y_2023 > 90) = [];
+
+Temp2022_Datetime = Data.h2022.Datetime;
+Temp2023_Datetime = Data.h2023.Datetime;
+
+Temp2022_Datetime(y_2022 > 90) = [];
+Temp2023_Datetime(y_2023 > 90) = [];
 
 y_2022(y_2022 > 90) = [];
 y_2023(y_2023 > 90) = [];
@@ -121,4 +127,9 @@ x_2022 = (inv(transpose(A_2022)*A_2022)) * (transpose(A_2022)*y_2022);
 
 A_2023 = [ones(1,length(time_2023));sin(omega_2023.*time_2023);cos(omega_2023.*time_2023)]';
 x_2023 = (inv(transpose(A_2023)*A_2023)) * (transpose(A_2023)*y_2023);
+
+y_bar_2022 = x_2022(1) + x_2022(2)*sin(omega_2022.*time_2022) + x_2022(3)*cos(omega_2022.*time_2022);
+y_bar_2023 = x_2023(1) + x_2023(2)*sin(omega_2023.*time_2023) + x_2023(3)*cos(omega_2023.*time_2023);
+
+
 %% Least-squares fit a semi-annual cycle (Q5)
