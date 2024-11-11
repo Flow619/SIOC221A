@@ -25,7 +25,7 @@ function [P,freq] = MySpectrum(x,dt)
     
     N = length(x); % Num of points in time series 
     
-    frequency.lowest = 1/(N*dt);  % Longest Period; smallest frequency
+    frequency.lowest = 1/(N*dt);  % Longest Period (full time-series); smallest frequency
     frequency.highest = 1/(2*dt);  % Shortest Period; highest frequency (Nyquiest Freq)
     frequency.series = -frequency.highest:frequency.lowest:frequency.highest;
     
@@ -51,7 +51,7 @@ function [P,freq] = MySpectrum(x,dt)
     % 4. Calculate your spectrum by squaring the absolute value of the coefficient of your fft-ed time series and normalizing as discussed in class
     Abs_Squared_X = abs(X).^2;
     
-    %%
+    %% Combine the Positive and Negative Frequnecies
     % 5. parts of the specrtrum that correspond to positive and negative
     % frequencies has amplitudes that are complex conjugates of each other,
     % meaning they have the same magnitude.
@@ -73,17 +73,24 @@ function [P,freq] = MySpectrum(x,dt)
     end
     
     %% Parseval's Theorem
-    
+    % 7. Once your function is working, check that is satisfies Parseval's
+    % Theorem
     Parseval.LeftSide = sum(Abs_Squared_X_Onesided)/(N*N);
     Parseval.RightSide = mean(x.^2);
-    
+
+    disp(['Parseval Right Side = ',num2str(Parseval.RightSide)])
+    disp(['Parseval Left Side = ',num2str(Parseval.LeftSide)])
+
+
     P = Abs_Squared_X_Onesided./(N*N);
     freq = frequency.onesided;
     
     %% LogLog Plot
+    % 8. Make a log-log plot of your spectrum versus frequency. 
     figure
     loglog(freq,P)
+    grid on
     xlabel('Frequncy [Hz?]')
-    ylabel('Power [Units?]')
-
+    ylabel('Power [units of x(t)^{2}]')
+    set(gca,'FontSize',18,'FontName','Courier')
 end
