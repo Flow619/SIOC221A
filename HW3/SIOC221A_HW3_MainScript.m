@@ -14,4 +14,4 @@ load('C:\Users\Trenton\Downloads\oct31_inclass.mat')
 dt = time(2) - time(1);
 
 %% Use MySpectrum Function
-cd()
+[P,freq] = MySpectrum(x,dt);
