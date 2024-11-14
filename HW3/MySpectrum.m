@@ -75,11 +75,11 @@ function [P,freq] = MySpectrum(x,dt)
     %% Parseval's Theorem
     % 7. Once your function is working, check that is satisfies Parseval's
     % Theorem
-    Parseval.LeftSide = sum(Abs_Squared_X_Onesided)/(N*N);
-    Parseval.RightSide = mean(x.^2);
+    Parseval.LeftSide = mean(x.^2);
+    Parseval.RightSide = sum(Abs_Squared_X_Onesided)/(N*N);
 
-    disp(['Parseval Right Side = ',num2str(Parseval.RightSide)])
-    disp(['Parseval Left Side = ',num2str(Parseval.LeftSide)])
+    fprintf('Parseval Left Side = %0.10f (units of x(t))^{2} \n',Parseval.LeftSide)
+    fprintf('Parseval Right Side =  = %0.10f (units of x(t))^{2} \n',Parseval.RightSide )
 
 
     P = Abs_Squared_X_Onesided./(N*N);
@@ -88,9 +88,9 @@ function [P,freq] = MySpectrum(x,dt)
     %% LogLog Plot
     % 8. Make a log-log plot of your spectrum versus frequency. 
     figure
-    loglog(freq,P)
+    loglog(freq,P,'LineWidth',1)
     grid on
     xlabel('Frequncy [Hz?]')
-    ylabel('Power [units of x(t)^{2}]')
-    set(gca,'FontSize',18,'FontName','Courier')
+    ylabel('Power [$\frac{(units of x(t))^{2}}{Hz}$]','Interpreter','latex')
+    set(gca,'FontSize',22,'FontName','Courier')
 end
