@@ -3,14 +3,6 @@ function [P,freq] = MySpectrum(x,dt)
     %% Class Prompt
     % [P,freq] = myspectrum(x(t),dt)
     
-    % - Is this enough infomration to feed in?
-    % - Let's say you want a one-sided freq spectrum to come out.
-    % - Goal. Demonstrate that you can create a function such that if you put
-    % in x(t), you get out a spectrum that satisfies parseval's theorm.
-    % - Plot your spectrum on a log-log plot (why does this seem useful)?
-    % - What are the units for the y-axis?
-    
-    
     %% FFT
     % 1. First Step in your function should be to fft the x(t) time series, and fftshift it to a sensible order.
     X = fft(x);  % MATLAB outputs the zero freq, positive freq, and then neg freq
