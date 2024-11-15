@@ -15,7 +15,7 @@ Num_Segment = 8;
 
 %% Figure out how many segments fit in the time sereis.
 
-if rem( length(time),Num_Segment) ~= 0
+if rem( length(time),Num_Segment ) ~= 0
     disp('***User may want to pick another Num_Segment: Remainder***')
     Segment_Length = floor(length(time)/Num_Segment);
     Remainder = rem( length(time),Num_Segment);
