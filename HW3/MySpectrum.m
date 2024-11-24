@@ -85,4 +85,7 @@ function [P,freq] = MySpectrum(x,dt)
     xlabel('Frequncy [Hz?]')
     ylabel('Power [$\frac{(units of x(t))^{2}}{Hz}$]','Interpreter','latex')
     set(gca,'FontSize',22,'FontName','Courier')
+
+    %% Transpose P for function output.
+    P = P.';
 end
