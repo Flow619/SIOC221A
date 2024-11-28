@@ -81,7 +81,7 @@ function [P,freq] = MySpectrum(x,dt,Figure_Flag)
     % 8. Make a log-log plot of your spectrum versus frequency. 
     if strcmp(Figure_Flag,"ON")
         figure
-        loglog(freq,P,'LineWidth',1)
+        loglog(freq,P,'LineWidth',1,'Color','k','HandleVisibility','off')
         grid on
         xlabel('Frequncy [Hz?]')
         ylabel('Power [$\frac{(units of x(t))^{2}}{Hz}$]','Interpreter','latex')
