@@ -37,3 +37,5 @@ for i = 1:3
 end
 
 legend
+ylabel('Power [$\frac{(meter/sec)^{2}}{days}$]','Interpreter','latex')
+xlabel('days^{-1}')
