@@ -67,15 +67,13 @@ function [P,freq] = MySpectrum(x,dt,Figure_Flag)
     %% Parseval's Theorem
     % 7. Once your function is working, check that is satisfies Parseval's
     % Theorem
-    Parseval.LeftSide = mean(x.^2);
-    Parseval.RightSide = sum(Abs_Squared_X_Onesided)/(N*N);
 
-    fprintf('Parseval Left Side = %0.10f (units of x(t))^{2} \n',Parseval.LeftSide)
-    fprintf('Parseval Right Side =  = %0.10f (units of x(t))^{2} \n',Parseval.RightSide )
-
-
-    P = Abs_Squared_X_Onesided./(N*N);
+    P = Abs_Squared_X_Onesided./( (N)*(N)*(frequency.lowest) );
     freq = frequency.onesided;
+
+    Parseval.LeftSide = mean(x.^2);
+    Parseval.RightSide = sum(P)*(frequency.lowest);
+
     
     %% LogLog Plot
     % 8. Make a log-log plot of your spectrum versus frequency. 
