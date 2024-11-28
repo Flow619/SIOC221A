@@ -1,4 +1,4 @@
-function [P,freq] = MySpectrum(x,dt)
+function [P,freq] = MySpectrum(x,dt,Figure_Flag)
 
     %% Class Prompt
     % [P,freq] = myspectrum(x(t),dt)
@@ -79,12 +79,14 @@ function [P,freq] = MySpectrum(x,dt)
     
     %% LogLog Plot
     % 8. Make a log-log plot of your spectrum versus frequency. 
-    figure
-    loglog(freq,P,'LineWidth',1)
-    grid on
-    xlabel('Frequncy [Hz?]')
-    ylabel('Power [$\frac{(units of x(t))^{2}}{Hz}$]','Interpreter','latex')
-    set(gca,'FontSize',22,'FontName','Courier')
+    if strcmp(Figure_Flag,"ON")
+        figure
+        loglog(freq,P,'LineWidth',1)
+        grid on
+        xlabel('Frequncy [Hz?]')
+        ylabel('Power [$\frac{(units of x(t))^{2}}{Hz}$]','Interpreter','latex')
+        set(gca,'FontSize',22,'FontName','Courier')
+    end
 
     %% Transpose P for function output.
     P = P.';
