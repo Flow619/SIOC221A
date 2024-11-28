@@ -20,7 +20,7 @@ hold on
 %% FFT Function
 % Function Inputs: time series, dt, and number of windows
 % Function Outputs: average spectrum, freq vector, error bars
-Num_Windows = [3,10,18];
+Num_Windows = [6,18,40];
 Colors = [0 0 1;1 0 0; 0 1 0];
 
 for i = 1:3
@@ -32,7 +32,7 @@ for i = 1:3
     
     %%  Plot
     plot( freq , Mean_P ,'linewidth',2, 'Color' , [Colors(i,:)] ,'DisplayName', ['Num Windows = ',num2str(Num_Windows(i))] ) % plot Mean Spectra
-    errorbar(freq(end) + 20*(freq(2)-freq(1)) , Mean_P(end), ( 1 - Error_Bars(1)) * Mean_P(end) , (Error_Bars(2) - 1) * Mean_P(end),'Color',Colors(i,:),'LineWidth',2,'HandleVisibility','off') % Plot Error Bars
+    errorbar(freq(end) + 30*(freq(2)-freq(1)) , Mean_P(end), ( 1 - Error_Bars(1)) * Mean_P(end) , (Error_Bars(2) - 1) * Mean_P(end),'Color',Colors(i,:),'LineWidth',2,'HandleVisibility','off') % Plot Error Bars
 
 end
 
