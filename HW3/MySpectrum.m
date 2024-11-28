@@ -74,6 +74,8 @@ function [P,freq] = MySpectrum(x,dt,Figure_Flag)
     Parseval.LeftSide = mean(x.^2);
     Parseval.RightSide = sum(P)*(frequency.lowest);
 
+    fprintf('Parseval Left Side = %0.10f (units of x(t))^{2} \n',Parseval.LeftSide)
+    fprintf('Parseval Right Side = %0.10f (units of x(t))^{2} \n',Parseval.RightSide )
     
     %% LogLog Plot
     % 8. Make a log-log plot of your spectrum versus frequency. 
